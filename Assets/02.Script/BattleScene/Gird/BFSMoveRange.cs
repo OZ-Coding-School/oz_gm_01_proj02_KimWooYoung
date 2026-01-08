@@ -9,13 +9,18 @@ public class BFSMoveRange : MonoBehaviour
     {
         gridManager = GetComponent<GridManager>();
     }
+    
+    //시작 start 이동가능거리 moveRange
     public List<Vector2Int> GetMoveRange(Vector2Int start, int moveRange)
     {
+        //이미 방문한 타일저장(중복방지)
         var visited = new HashSet<Vector2Int>();
+        //타일의 위치와 이동비용 저장
         var cost = new Dictionary<Vector2Int, int>();
-        var quene = new Queue<Vector2Int>();
+        //타일 위치 저장
+        var queue = new Queue<Vector2Int>();
 
-        quene.Enqueue(start);
+        queue.Enqueue(start);
         visited.Add(start);
         cost[start] = 0;
 
@@ -27,9 +32,9 @@ public class BFSMoveRange : MonoBehaviour
             Vector2Int.right,
         };
 
-        while(quene.Count > 0)
+        while(queue.Count > 0)
         {
-            var current = quene.Dequeue();
+            var current = queue.Dequeue();
             foreach(var dir in dirs)
             {
                 var next = current + dir;
@@ -40,15 +45,17 @@ public class BFSMoveRange : MonoBehaviour
 
                 if(nextCost > moveRange) continue;
 
-                quene.Enqueue(next);
+                queue.Enqueue(next);
                 visited.Add(next);
                 cost[next] = nextCost;
             }
         }
+        //시작점은 제외
         visited.Remove(start);
 
         return new List<Vector2Int>(visited);
     }
+    //그리드 범위 벗어날시 x
     bool IsValid(Vector2Int pos)
     {
         if(pos.x < 0 || pos.x >= gridManager.width) return false;

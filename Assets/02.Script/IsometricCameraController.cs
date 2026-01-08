@@ -12,7 +12,7 @@ public class IsometricCameraController : MonoBehaviour
         forward.y = 0;
         forward = Vector3.Normalize(forward);
 
-        right = Quaternion.Euler(new Vector3(0,90,0)) * forward;
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
     }
     private void Update()
     {
