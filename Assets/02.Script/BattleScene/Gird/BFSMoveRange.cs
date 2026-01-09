@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class BFSMoveRange : MonoBehaviour
 {
+    [SerializeField] private int forwardRange = 3;
+    [SerializeField] private int backwardRange = 3;
+    [SerializeField] private int sideRange = 3;
+
+
+
     GridManager gridManager;
 
     private void Awake()
@@ -41,7 +47,20 @@ public class BFSMoveRange : MonoBehaviour
 
                 if(!IsValid(next) || visited.Contains(next)) continue;
 
-                int nextCost = cost[current] + 1;
+                if(!gridManager.CanMove(current, next)) continue;
+
+                Tile currentTile = gridManager.GetTile(current);
+                Tile nextTile = gridManager.GetTile(next);
+
+                int heightDiff = nextTile.height - currentTile.height;
+
+                int moveCost = 1;
+                if(heightDiff > 0)
+                {
+                    moveCost += heightDiff;
+                }
+
+                int nextCost = cost[current] + moveCost;
 
                 if(nextCost > moveRange) continue;
 
@@ -58,8 +77,8 @@ public class BFSMoveRange : MonoBehaviour
     //그리드 범위 벗어날시 x
     bool IsValid(Vector2Int pos)
     {
-        if(pos.x < 0 || pos.x >= gridManager.width) return false;
-        if(pos.y < 0 || pos.y >= gridManager.height) return false;
+        if(pos.x < 0 || pos.x >= gridManager.gridwidth) return false;
+        if(pos.y < 0 || pos.y >= gridManager.gridheight) return false;
 
         Tile tile = gridManager.GetTile(pos);
         if(tile == null) return false;
