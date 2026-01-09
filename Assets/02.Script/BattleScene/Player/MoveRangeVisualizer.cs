@@ -8,11 +8,13 @@ public class MoveRangeVisualizer : MonoBehaviour
     [SerializeField] private BFSMoveRange bfsMoveRange;
     [SerializeField] private LayerMask groundMask;
 
+    [Header("PlayerMove")]
     [SerializeField] private int moveRange = 3;
-    [SerializeField] private Color moveColor = Color.yellow;
-    [SerializeField] private Color defaultColor = Color.red;
     [SerializeField] private float moveSpeed = 5f;
 
+    [Header("TileColor")]
+    [SerializeField] private Color moveColor = Color.yellow;
+    [SerializeField] private Color defaultColor = Color.white;
     [SerializeField] private GridHighlight gridHighlight;
 
     private List<Vector2Int> currentMoveTiles = new List<Vector2Int>();
@@ -57,6 +59,7 @@ public class MoveRangeVisualizer : MonoBehaviour
     IEnumerator MoveTo(Vector3 target)
     {
         isMoving = true;
+
 
         while (Vector3.Distance(transform.position, target) > 0.05f)
         {

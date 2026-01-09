@@ -5,6 +5,7 @@ public class Tile : MonoBehaviour
     public Vector2Int gridPos;
     public bool walkable = true;
     public bool occupied = false;
+    public int height;
 
     private Renderer rend;
 
