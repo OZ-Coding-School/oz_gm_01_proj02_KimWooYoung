@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class BFSMoveRange : MonoBehaviour
 {
-    [SerializeField] private int forwardRange = 3;
-    [SerializeField] private int backwardRange = 3;
-    [SerializeField] private int sideRange = 3;
-
-
 
     GridManager gridManager;
 
@@ -75,7 +70,7 @@ public class BFSMoveRange : MonoBehaviour
         return new List<Vector2Int>(visited);
     }
     //그리드 범위 벗어날시 x
-    bool IsValid(Vector2Int pos)
+    private bool IsValid(Vector2Int pos)
     {
         if(pos.x < 0 || pos.x >= gridManager.gridwidth) return false;
         if(pos.y < 0 || pos.y >= gridManager.gridheight) return false;

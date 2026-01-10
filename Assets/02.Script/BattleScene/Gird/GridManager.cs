@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
     {
         GenerateGrid();
     }
-    void GenerateGrid()
+    private void GenerateGrid()
     {
         tiles = new Tile[gridwidth, gridheight];
 
@@ -39,14 +39,12 @@ public class GridManager : MonoBehaviour
                 Tile tile = Instantiate(prefab, woldPos, Quaternion.identity, transform);
 
                 tile.gridPos = new Vector2Int(x, y);
-                //tile.walkable = true;
-                //tile.SetColor(Color.white);
 
                 tiles[x, y] = tile;
             }
         }
     }
-    Tile GetRandomTilePrefab()
+    private Tile GetRandomTilePrefab()
     {
         int roll = Random.Range(0, 100);
         int cumulative = 0;
@@ -109,8 +107,8 @@ public class GridManager : MonoBehaviour
         int y = Mathf.FloorToInt(worldPos.z / tileSize);
 
         //x축과 y축 값을 제한
-        x = Mathf.Clamp(x, 0, gridwidth);
-        y = Mathf.Clamp(y, 0, gridheight); 
+        x = Mathf.Clamp(x, 0, gridwidth-1);
+        y = Mathf.Clamp(y, 0, gridheight-1); 
 
         return new Vector2Int(x, y);
 
@@ -130,14 +128,14 @@ public class GridManager : MonoBehaviour
         return new Vector3(x, tileTopY + playerHalfHeight, z);
     }
 
-    private void OnValidate()
-    {
-        int total = flatChance + normalChance + highChance;
-        if (total != 100)
-        {
-            Debug.LogWarning($"Tile spawn chance total = {total} (should be 100)");
-        }
-    }
+    //private void OnValidate()
+    //{
+    //    int total = flatChance + normalChance + highChance;
+    //    if (total != 100)
+    //    {
+    //        Debug.LogWarning($"Tile spawn chance total = {total} (should be 100)");
+    //    }
+    //}
 
 
 

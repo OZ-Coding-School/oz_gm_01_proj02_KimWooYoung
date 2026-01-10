@@ -308,6 +308,7 @@ GameObject:
   - component: {fileID: 536741698}
   - component: {fileID: 536741697}
   - component: {fileID: 536741699}
+  - component: {fileID: 536741700}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -361,6 +362,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb1114b21c18a564a8d70ae1fca8ee64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &536741700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536741696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b663cd9f589868248a32481362fe1b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &580858701
@@ -800,7 +813,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -5
+  near clip plane: -7
   far clip plane: 100
   field of view: 60
   orthographic: 1
@@ -1082,9 +1095,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   target: {fileID: 112210655}
-  chaseDistance: 100
-  attackDistance: 3
-  speed: 2
+  gridManager: {fileID: 536741697}
+  aStar: {fileID: 536741700}
+  isMoving: 0
 --- !u!65 &2088393899
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1165,7 +1178,7 @@ Transform:
   m_GameObject: {fileID: 2088393897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.3, y: 0.56377995, z: 35.7}
+  m_LocalPosition: {x: 8.94, y: 0.56377995, z: 41.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1178,9 +1191,9 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1835496550}
-  - {fileID: 112210655}
   - {fileID: 970473027}
-  - {fileID: 536741698}
   - {fileID: 635142542}
+  - {fileID: 112210655}
   - {fileID: 652953995}
   - {fileID: 2088393902}
+  - {fileID: 536741698}
