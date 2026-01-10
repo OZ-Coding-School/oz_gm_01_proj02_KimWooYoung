@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PriorityQueue<T>
 {
-    private List<(T item, int priority)> elements = new List<(T item, int priority)>(); 
+    private List<(T grid, int priority)> elements = new List<(T grid, int priority)>(); 
 
     public int Count => elements.Count;
 
-    public void Enqueue(T item, int priority)
+    public void Enqueue(T grid, int priority)
     {
-        elements.Add((item, priority));
+        elements.Add((grid, priority));
     }
     public T Dequeue()
     {
@@ -22,7 +22,7 @@ public class PriorityQueue<T>
                 bestIndex = i;
             }
         }
-        T bestItem = elements[bestIndex].item;
+        T bestItem = elements[bestIndex].grid;
 
         elements.RemoveAt(bestIndex);
 

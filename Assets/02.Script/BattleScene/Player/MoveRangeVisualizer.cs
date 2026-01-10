@@ -18,6 +18,7 @@ public class MoveRangeVisualizer : MonoBehaviour
     [SerializeField] private GridHighlight gridHighlight;
 
     private List<Vector2Int> currentMoveTiles = new List<Vector2Int>();
+    private Vector2Int facingDir;
     private bool isMoving = false;
 
     private void Update()
@@ -56,22 +57,43 @@ public class MoveRangeVisualizer : MonoBehaviour
         StartCoroutine(MoveTo(targetWorld));
     }
 
-    IEnumerator MoveTo(Vector3 target)
+    IEnumerator MoveTo(Vector3 targetWorld)
     {
         isMoving = true;
 
+        Vector2Int currentGrid = gridManager.WorldToGrid(transform.position);
+        Vector2Int targetGrid = gridManager.WorldToGrid(targetWorld);
 
-        while (Vector3.Distance(transform.position, target) > 0.05f)
+        while (currentGrid != targetGrid)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        transform.position = target;
-        currentMoveTiles.Clear();
-        isMoving = false;
+            Vector2Int nextGrid = currentGrid;
 
+            // X 먼저 이동
+            if (targetGrid.x != currentGrid.x)
+            {
+                nextGrid.x += targetGrid.x > currentGrid.x ? 1 : -1;
+                facingDir = targetGrid.x > currentGrid.x ? Vector2Int.right : Vector2Int.left;
+            }
+            // X가 같으면 Z 이동
+            else if (targetGrid.y != currentGrid.y)
+            {
+                nextGrid.y += targetGrid.y > currentGrid.y ? 1 : -1;
+                facingDir = targetGrid.y > currentGrid.y ? Vector2Int.up : Vector2Int.down;
+            }
+
+            Vector3 nextWorld = gridManager.GridToWorld(nextGrid);
+
+            // 한 칸 이동
+            yield return MoveDirectiontCo(nextWorld);
+
+            currentGrid = nextGrid;
+        }
+
+        currentMoveTiles.Clear();
         gridManager.ResetAllTiles(defaultColor);
+        isMoving = false;
     }
+
 
     IEnumerator ShowMoveRangeRoutine()
     {
@@ -88,8 +110,37 @@ public class MoveRangeVisualizer : MonoBehaviour
         yield return null;
 
         gridHighlight.enableHover = true;
+    }
 
+    private IEnumerator MoveDirectiontCo(Vector3 target)
+    {
+        while (Vector3.Distance(transform.position, target) > 0.01f)
+        {
+            Direction();
 
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                target,
+                moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+    }
+    private void Direction()
+    {
+        Vector3 dir = Vector3.zero;
+
+        if (facingDir == Vector2Int.right) dir = Vector3.right;
+        if (facingDir == Vector2Int.left) dir = Vector3.left;
+        if (facingDir == Vector2Int.up) dir = Vector3.forward;
+        if (facingDir == Vector2Int.down) dir = Vector3.back;
+
+        if (dir == Vector3.zero) return;
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRot,
+            360f * Time.deltaTime);
     }
 
 }
