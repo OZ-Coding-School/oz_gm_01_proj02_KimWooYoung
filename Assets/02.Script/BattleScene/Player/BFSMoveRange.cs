@@ -39,7 +39,11 @@ public class BFSMoveRange : MonoBehaviour
 
                 if(!IsValid(next) || visited.Contains(next)) continue;
 
-                if(!gridManager.CanMove(current, next)) continue;
+                if (!gridManager.CanMove(current, next))
+                {
+                    Debug.Log($"CanMove false : {current} -> {next}");
+                    continue;
+                }
 
                 Tile currentTile = gridManager.GetTile(current);
                 Tile nextTile = gridManager.GetTile(next);
@@ -59,6 +63,7 @@ public class BFSMoveRange : MonoBehaviour
                 queue.Enqueue(next);
                 visited.Add(next);
                 cost[next] = nextCost;
+
             }
         }
         //시작점은 제외
@@ -76,5 +81,7 @@ public class BFSMoveRange : MonoBehaviour
         if(tile == null) return false;
 
         return tile.walkable;
+
+
     }
 }
