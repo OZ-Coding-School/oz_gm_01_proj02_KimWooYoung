@@ -64,7 +64,7 @@ public class EnemyFSM : MonoBehaviour
         //이동량 만큼 이동
         int step = Mathf.Min(moveRange, path.Count -1);
 
-        StartCoroutine(MoveByPath(path, step));
+        StartCoroutine(MoveByPathCo(path, step));
     }
     private void Direction()
     {
@@ -84,7 +84,7 @@ public class EnemyFSM : MonoBehaviour
             360f * Time.deltaTime);
     }
 
-    IEnumerator MoveByPath(List<Vector2Int>path, int steps)
+    private IEnumerator MoveByPathCo(List<Vector2Int>path, int steps)
     {
         isMoving = true;
 
@@ -101,20 +101,20 @@ public class EnemyFSM : MonoBehaviour
 
             Vector3 xTarget = new Vector3
                 (tileWoldPos.x, tileWoldPos.y, transform.position.z);
-            yield return MoveStraight(xTarget);
+            yield return MoveStraightCo(xTarget);
 
             if (to.y > from.y) facingDir = Vector2Int.up;
             else if (to.y < from.y) facingDir = Vector2Int.down;
 
             Vector3 zTarget = new Vector3
                 (transform.position.x, tileWoldPos.y, tileWoldPos.z);
-            yield return MoveStraight(zTarget);
+            yield return MoveStraightCo(zTarget);
         }
             isMoving = false;
             currentState = State.Idle;
     }
 
-    IEnumerator MoveStraight(Vector3 target)
+    private IEnumerator MoveStraightCo(Vector3 target)
     {
         while (Vector3.Distance(transform.position, target) > 0.01f)
         {

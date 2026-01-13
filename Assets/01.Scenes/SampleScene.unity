@@ -137,9 +137,10 @@ GameObject:
   - component: {fileID: 112210652}
   - component: {fileID: 112210657}
   - component: {fileID: 112210658}
+  - component: {fileID: 112210659}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 112210651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.819, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -265,6 +266,33 @@ MonoBehaviour:
   moveColor: {r: 0, g: 1, b: 0.01581049, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   gridHighlight: {fileID: 652953994}
+--- !u!54 &112210659
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112210651}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &475660277
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flatTilePrefab: {fileID: 2495686479102542550, guid: f84b4b243182f1345839b56aea59f744, type: 3}
-  nomalTilePrefab: {fileID: 2757203690730058281, guid: cdd661405d45eef4c8e71c05856cb0c7, type: 3}
+  normalTilePrefab: {fileID: 2757203690730058281, guid: cdd661405d45eef4c8e71c05856cb0c7, type: 3}
   highTilePrefab: {fileID: 1503588800730338473, guid: c2ba1cc6aeec2b9479be01a363c9029a, type: 3}
   tileSize: 2
   gridwidth: 30
@@ -337,6 +365,10 @@ MonoBehaviour:
   flatChance: 85
   normalChance: 12
   highChance: 3
+  playerSpawnObjects:
+  - {fileID: 112210655}
+  enemySpawnObjects:
+  - {fileID: 2088393902}
 --- !u!4 &536741698
 Transform:
   m_ObjectHideFlags: 0
@@ -1074,9 +1106,10 @@ GameObject:
   - component: {fileID: 2088393900}
   - component: {fileID: 2088393899}
   - component: {fileID: 2088393898}
+  - component: {fileID: 2088393903}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1178,12 +1211,39 @@ Transform:
   m_GameObject: {fileID: 2088393897}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.94, y: 0.56377995, z: 41.6}
+  m_LocalPosition: {x: 10, y: 0.56377995, z: 40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2088393903
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088393897}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

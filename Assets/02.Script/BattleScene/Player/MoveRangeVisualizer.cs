@@ -37,9 +37,9 @@ public class MoveRangeVisualizer : MonoBehaviour
 
     private void ShowMoveRage()
     {
-        StartCoroutine(ShowMoveRangeRoutine());
+        StartCoroutine(ShowMoveRangeRoutineCo());
     }
-
+    
     private void TryMove()
     {
         if(isMoving) return;
@@ -54,10 +54,10 @@ public class MoveRangeVisualizer : MonoBehaviour
 
         Vector3 targetWorld = gridManager.GridToWorld(targetGrid);
 
-        StartCoroutine(MoveTo(targetWorld));
+        StartCoroutine(MoveToCo(targetWorld));
     }
 
-    IEnumerator MoveTo(Vector3 targetWorld)
+    private IEnumerator MoveToCo(Vector3 targetWorld)
     {
         isMoving = true;
 
@@ -95,7 +95,7 @@ public class MoveRangeVisualizer : MonoBehaviour
     }
 
 
-    IEnumerator ShowMoveRangeRoutine()
+    private IEnumerator ShowMoveRangeRoutineCo()
     {
         gridHighlight.DisableHover();
 

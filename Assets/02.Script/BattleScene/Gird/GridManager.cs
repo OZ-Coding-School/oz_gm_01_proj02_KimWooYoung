@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
     [Header("Tile Prefabs")]
     public Tile flatTilePrefab;
-    public Tile nomalTilePrefab;
+    public Tile normalTilePrefab;
     public Tile highTilePrefab;
 
     [Header("Grid Settings")]
@@ -19,10 +20,21 @@ public class GridManager : MonoBehaviour
     [Range(0, 100)] public int normalChance = 12;
     [Range(0, 100)] public int highChance = 3;
 
+    [Header("Spawn Positions")]
+    public List<Transform> playerSpawnObjects;
+    public List<Transform> enemySpawnObjects;
+
+    //오브젝트 스폰 위치 저장
+    private HashSet<Vector2Int> spawnGridSet = new HashSet<Vector2Int>();
+
+
     public Tile[,] tiles;
-    void Start()
+
+    private void Awake()
     {
+        CacheSpawnGrids();
         GenerateGrid();
+
     }
     private void GenerateGrid()
     {
@@ -32,17 +44,50 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < gridwidth; x++)
             {
-                Tile prefab = GetRandomTilePrefab();
+                Vector2Int gridPos = new Vector2Int(x, y);
 
-                Vector3 woldPos = new Vector3(x*tileSize, prefab.height * heightVisual, y*tileSize);
+                Tile prefab;
 
-                Tile tile = Instantiate(prefab, woldPos, Quaternion.identity, transform);
-
-                tile.gridPos = new Vector2Int(x, y);
+                if (IsSpawnPosition(gridPos))
+                {
+                    prefab = flatTilePrefab;
+                }
+                else
+                {
+                    prefab = GetRandomTilePrefab();
+                }
+                //월드좌표 계산
+                Vector3 woldPos = new Vector3
+                    (x*tileSize, prefab.height * heightVisual, y*tileSize);
+                //타일 생성
+                Tile tile = Instantiate
+                    (prefab, woldPos, Quaternion.identity, transform);
 
                 tiles[x, y] = tile;
             }
         }
+    }
+    //player enemy 위치 저장
+    private void CacheSpawnGrids()
+    {
+        spawnGridSet.Clear();
+
+        foreach(var tile in playerSpawnObjects)
+        {
+            if(tile == null) continue;   
+            spawnGridSet.Add(WorldToGrid(tile.position));
+        }
+        foreach(var tile in enemySpawnObjects)
+        {
+            if(tile == null) continue;
+            spawnGridSet.Add(WorldToGrid(tile.position));
+        }
+    }
+
+    //spawnGridSet에 pos가 해당되는지 확인
+    private bool IsSpawnPosition(Vector2Int pos)
+    {
+       return spawnGridSet.Contains(pos);
     }
     private Tile GetRandomTilePrefab()
     {
@@ -53,16 +98,13 @@ public class GridManager : MonoBehaviour
         if (roll < cumulative) return flatTilePrefab;
 
         cumulative += normalChance;
-        if (roll < cumulative) return nomalTilePrefab;
+        if (roll < cumulative) return normalTilePrefab;
 
         return highTilePrefab;
     }
-    public Tile GetTile(Vector2Int pos)
-    {
-        if (pos.x < 0 || pos.x >= gridwidth || pos.y < 0 ||pos.y >= gridheight) return null;
 
-        return tiles[pos.x, pos.y];
-    }
+
+    //이동 가능 판단
     public bool CanMove(Vector2Int from, Vector2Int to)
     {
         Tile fromTile = GetTile(from);
@@ -99,7 +141,6 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    //월드 좌표에서 그리드 좌표로 변환
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         //벡터를 입력받아 그리드 위치로 변환
@@ -113,7 +154,6 @@ public class GridManager : MonoBehaviour
         return new Vector2Int(x, y);
 
     }
-
     public Vector3 GridToWorld(Vector2Int gridPos)
     {
         Tile tile = GetTile(gridPos);
@@ -128,15 +168,11 @@ public class GridManager : MonoBehaviour
         return new Vector3(x, tileTopY + playerHalfHeight, z);
     }
 
-    //private void OnValidate()
-    //{
-    //    int total = flatChance + normalChance + highChance;
-    //    if (total != 100)
-    //    {
-    //        Debug.LogWarning($"Tile spawn chance total = {total} (should be 100)");
-    //    }
-    //}
+    public Tile GetTile(Vector2Int pos)
+    {
+        if (pos.x < 0 || pos.x >= gridwidth || pos.y < 0 || pos.y >= gridheight) return null;
 
-
+        return tiles[pos.x, pos.y];
+    }
 
 }
