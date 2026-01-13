@@ -3,20 +3,17 @@ using UnityEngine;
 
 public class BFSMoveRange : MonoBehaviour
 {
-
     GridManager gridManager;
 
     private void Awake()
     {
         gridManager = GetComponent<GridManager>();
     }
-    
-    //시작 start 이동가능거리 moveRange
     public List<Vector2Int> GetMoveRange(Vector2Int start, int moveRange)
     {
         //이미 방문한 타일저장(중복방지)
         var visited = new HashSet<Vector2Int>();
-        //타일의 위치와 이동비용 저장
+        //누적 이동 비용
         var cost = new Dictionary<Vector2Int, int>();
         //타일 위치 저장
         var queue = new Queue<Vector2Int>();
