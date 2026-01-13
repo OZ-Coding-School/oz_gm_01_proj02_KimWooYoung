@@ -20,27 +20,29 @@ public class MoveRangeVisualizer : MonoBehaviour
     private List<Vector2Int> currentMoveTiles = new List<Vector2Int>();
     private Vector2Int facingDir;
     private bool isMoving = false;
+    
+    public bool IsMoving => isMoving;
 
     private void Update()
     {
         if (isMoving) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ShowMoveRage();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    ShowMoveRage();
+        //}
         if (Input.GetMouseButtonDown(0)) 
         {
             TryMove();
         }
     }
 
-    private void ShowMoveRage()
+    public void ShowMoveRage()
     {
         StartCoroutine(ShowMoveRangeRoutineCo());
     }
     
-    private void TryMove()
+    public void TryMove()
     {
         if(isMoving) return;
         if (currentMoveTiles.Count ==0) return;
@@ -89,8 +91,10 @@ public class MoveRangeVisualizer : MonoBehaviour
             currentGrid = nextGrid;
         }
 
+
         currentMoveTiles.Clear();
         gridManager.ResetAllTiles(defaultColor);
+        transform.position = gridManager.GridToWorld(currentGrid);
         isMoving = false;
     }
 

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462a5700321008844bd61e8706be3a84, type: 3}
+  m_Name: FireBoobSO
+  m_EditorClassIdentifier: 
+  skillName: FileBoob
+  range: 1
+  damage: 2
+  areaSize: 3
+  type: 1

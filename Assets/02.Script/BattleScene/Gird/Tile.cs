@@ -16,11 +16,25 @@ public class Tile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy")) return;
+
+        bool isMoving = false;
+
+        var playerMove = other.GetComponent<MoveRangeVisualizer>();
+        if(playerMove != null)
         {
+            isMoving = playerMove.IsMoving;
+        }
+        var enemyFSM = other.GetComponent<EnemyFSM>();
+        if (enemyFSM != null) 
+        {
+            isMoving = enemyFSM.IsMoving;
+        }
+        if (isMoving) return;
+
             unitCount++;
             walkable = false;
-        }
+        
     }
     private void OnTriggerExit(Collider other)
     {

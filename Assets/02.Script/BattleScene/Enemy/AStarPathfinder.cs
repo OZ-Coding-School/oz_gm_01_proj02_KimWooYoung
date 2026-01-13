@@ -53,7 +53,7 @@ public class AStarPathfinder : MonoBehaviour
             foreach (var dir in dirs)
             {
                 var neighbor = current + dir;
-                if (!IsValid(neighbor) || closedSet.Contains(neighbor)
+                if (neighbor != end && !IsValid(neighbor) || closedSet.Contains(neighbor)
                     || !gridManager.CanMove(current, neighbor))
                 {
                     continue;
@@ -96,6 +96,7 @@ public class AStarPathfinder : MonoBehaviour
         if (pos.y < 0 || pos.y >= gridManager.gridheight) return false;
 
         Tile tile = gridManager.GetTile(pos);
+        
         if (tile == null) return false;
 
         return tile.walkable;

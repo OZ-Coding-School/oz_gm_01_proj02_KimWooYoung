@@ -89,6 +89,8 @@ public class GridManager : MonoBehaviour
     {
        return spawnGridSet.Contains(pos);
     }
+
+    //가중치에 따른 그리드 생성
     private Tile GetRandomTilePrefab()
     {
         int roll = Random.Range(0, 100);

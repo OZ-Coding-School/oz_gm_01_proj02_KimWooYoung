@@ -13,30 +13,29 @@ public class EnemyFSM : MonoBehaviour
     }
 
     public State currentState = State.Idle;
-    public Transform target;
-    [SerializeField]private GridManager gridManager;
-    [SerializeField]private AStarPathfinder aStar;
+    [SerializeField] private Transform target;
+    [SerializeField] private GridManager gridManager;
+    [SerializeField] private AStarPathfinder aStar;
+    [SerializeField] private BaseSO baseSO;
 
     private int moveRange = 3;
+    private float moveSpeed = 3f;
+
+    public bool IsMoving => isMoving;
 
     Vector2Int facingDir;
 
 
     public bool isMoving = false;
 
-    private void Update()
+    public void StartTrun()
     {
-        CheckTest();
-        ChangeState();
 
+        StartCoroutine(EnemyTurnRoutine());
+        currentState = State.Chase;
+        ChangeState();
     }
-    private void CheckTest()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            currentState = State.Chase;
-        }
-    }
+
     private void ChangeState()
     {
         switch (currentState)
@@ -53,35 +52,27 @@ public class EnemyFSM : MonoBehaviour
 
     private void MoveByAStar()
     {
+
         if (isMoving) return;
 
         Vector2Int start = gridManager.WorldToGrid(transform.position);
         Vector2Int end = gridManager.WorldToGrid(target.position);
 
+
         List<Vector2Int> path = aStar.GetAStarPath(start, end);
+
         if (path == null || path.Count <= 1) return;
 
         //이동량 만큼 이동
-        int step = Mathf.Min(moveRange, path.Count -1);
+        int maxReach = path.Count - 2;
+        int step = Mathf.Min(moveRange, maxReach);
+
+        if (step <=0)
+        {
+            return;
+        }
 
         StartCoroutine(MoveByPathCo(path, step));
-    }
-    private void Direction()
-    {
-        Vector3 dir = Vector3.zero;
-
-        if (facingDir == Vector2Int.right) dir = Vector3.right;
-        if (facingDir == Vector2Int.left) dir = Vector3.left;
-        if (facingDir == Vector2Int.up) dir = Vector3.forward;
-        if (facingDir == Vector2Int.down) dir = Vector3.back;
-
-        if (dir == Vector3.zero) return;
-        Quaternion targetRot = Quaternion.LookRotation(dir);
-
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            targetRot,
-            360f * Time.deltaTime);
     }
 
     private IEnumerator MoveByPathCo(List<Vector2Int>path, int steps)
@@ -110,8 +101,8 @@ public class EnemyFSM : MonoBehaviour
                 (transform.position.x, tileWoldPos.y, tileWoldPos.z);
             yield return MoveStraightCo(zTarget);
         }
-            isMoving = false;
-            currentState = State.Idle;
+        isMoving = false;
+        currentState = State.Idle;
     }
 
     private IEnumerator MoveStraightCo(Vector3 target)
@@ -120,9 +111,67 @@ public class EnemyFSM : MonoBehaviour
         {
             Direction();
             transform.position = Vector3.MoveTowards
-                (transform.position, target, 3f * Time.deltaTime);
+                (transform.position, target, moveSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    private void Direction()
+    {
+        Vector3 dir = Vector3.zero;
+
+        if (facingDir == Vector2Int.right) dir = Vector3.right;
+        if (facingDir == Vector2Int.left) dir = Vector3.left;
+        if (facingDir == Vector2Int.up) dir = Vector3.forward;
+        if (facingDir == Vector2Int.down) dir = Vector3.back;
+
+        if (dir == Vector3.zero) return;
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRot,
+            360f * Time.deltaTime);
+    }
+
+    private IEnumerator EnemyTurnRoutine()
+    {
+        if (CanAttackTarget())
+        {
+            isMoving = true;
+            Attack();
+            yield return null;
+            isMoving = false; 
+            yield break;
+        }
+        MoveByAStar();
+
+        while (isMoving) yield return null;
+
+        if (CanAttackTarget())
+        {
+            Attack();
+        }
+    }
+
+    private bool CanAttackTarget()
+    {
+        Vector2Int enemyPos = gridManager.WorldToGrid(transform.position);
+        Vector2Int targetPos = gridManager.WorldToGrid(target.position);
+
+        int dist = Mathf.Abs(enemyPos.x - targetPos.x) + Mathf.Abs(enemyPos.y - targetPos.y);
+
+        return dist <= baseSO.attackRange;
+    }
+
+    private void Attack()
+    {
+        Debug.Log("[Enemy] Attack!");
+
+        Health targetHealth = target.GetComponent<Health>();
+        if (targetHealth == null) return;
+
+        targetHealth.TakeDamage(baseSO.Damage);
     }
 
 }
