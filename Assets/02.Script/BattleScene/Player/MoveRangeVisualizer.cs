@@ -96,6 +96,11 @@ public class MoveRangeVisualizer : MonoBehaviour
         gridManager.ResetAllTiles(defaultColor);
         transform.position = gridManager.GridToWorld(currentGrid);
         isMoving = false;
+
+        Debug.Log("이동 끝남, 공격 시도");
+
+        FindObjectOfType<PlayerAttack>()?.TryAutoAttack();
+
     }
 
 

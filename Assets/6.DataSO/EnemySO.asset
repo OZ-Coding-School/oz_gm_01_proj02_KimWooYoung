@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf054a95af05a5438eece35c7be97e4, type: 3}
   m_Name: EnemySO
   m_EditorClassIdentifier: 
-  maxHp: 10
+  maxHp: 4
   Damage: 1
   attackRange: 1

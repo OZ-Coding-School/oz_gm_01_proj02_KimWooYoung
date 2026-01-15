@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 112210659}
   - component: {fileID: 112210660}
   - component: {fileID: 112210661}
+  - component: {fileID: 112210662}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,6 +322,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+--- !u!114 &112210662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112210651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc96c00c87c6fe4b9a35b25093258f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUnit: {fileID: 112210660}
+  gridManager: {fileID: 536741697}
 --- !u!1 &475660277
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,8 +935,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb1b338cb92baa45afc2053f0a23136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetY: 4
-  player: {fileID: 112210655}
+  offset: {x: 0, y: 4, z: 0}
+  target: {fileID: 112210655}
+  fllowSpeed: 10
 --- !u!1 &970473023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,6 +1151,8 @@ GameObject:
   - component: {fileID: 2088393899}
   - component: {fileID: 2088393898}
   - component: {fileID: 2088393903}
+  - component: {fileID: 2088393904}
+  - component: {fileID: 2088393905}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1158,7 +1176,7 @@ MonoBehaviour:
   target: {fileID: 112210655}
   gridManager: {fileID: 536741697}
   aStar: {fileID: 536741700}
-  baseSO: {fileID: 11400000, guid: 60e962bf2ec8bf840b2ea16a324ba609, type: 2}
+  EnemySO: {fileID: 11400000, guid: 60e962bf2ec8bf840b2ea16a324ba609, type: 2}
   isMoving: 0
 --- !u!65 &2088393899
 BoxCollider:
@@ -1273,6 +1291,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2088393904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088393897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0a03351df3c24195f57cdd2236d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+--- !u!114 &2088393905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088393897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfffbc9158582c43afbe97db1a17118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemySO: {fileID: 11400000, guid: 60e962bf2ec8bf840b2ea16a324ba609, type: 2}
 --- !u!1 &2122609073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,6 +1347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRangeVisualizer: {fileID: 112210658}
+  isometricCamera: {fileID: 963194229}
+  player: {fileID: 112210655}
   enemyFSM: {fileID: 2088393898}
   state: 0
 --- !u!4 &2122609075

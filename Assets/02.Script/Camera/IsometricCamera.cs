@@ -5,19 +5,20 @@ using static UnityEngine.GraphicsBuffer;
 
 public class IsometricCamera : MonoBehaviour
 {
-    [SerializeField] float offsetY = 4f;
-    public Transform player;
-
-
+    [SerializeField] private Vector3 offset = new Vector3(0f, 10f, 0f);
+    [SerializeField] public Transform target;
+    [SerializeField] private float fllowSpeed = 10f;
 
     void LateUpdate()
     {
-        if (player == null) return;
+        if (target == null) return;
 
-        transform.position = new Vector3(
-            player.position.x,
-            offsetY,
-            player.position.z
-        );
+        Vector3 desiredPos = target.position + offset;
+        transform.position = Vector3.Lerp(transform.position,
+            desiredPos, fllowSpeed * Time.deltaTime);
+    }
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
 }
