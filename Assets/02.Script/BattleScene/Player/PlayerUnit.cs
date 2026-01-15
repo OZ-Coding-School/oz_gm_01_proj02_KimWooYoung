@@ -6,6 +6,8 @@ public class PlayerUnit : MonoBehaviour
 
     private Health health;
 
+    public BaseSO Data => playerSO;
+
     private void Awake()
     {
         health = GetComponent<Health>();
@@ -15,7 +17,7 @@ public class PlayerUnit : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"현재 체력 : {health.CurrentHP}");
+        Debug.Log($"플레이어 현재 체력 : {health.CurrentHP}");
 
     }
 

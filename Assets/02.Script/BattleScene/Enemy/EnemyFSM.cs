@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class EnemyFSM : MonoBehaviour
@@ -16,7 +15,7 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private AStarPathfinder aStar;
-    [SerializeField] private BaseSO baseSO;
+    [SerializeField] private BaseSO EnemySO;
 
     private int moveRange = 3;
     private float moveSpeed = 3f;
@@ -161,7 +160,7 @@ public class EnemyFSM : MonoBehaviour
 
         int dist = Mathf.Abs(enemyPos.x - targetPos.x) + Mathf.Abs(enemyPos.y - targetPos.y);
 
-        return dist <= baseSO.attackRange;
+        return dist <= EnemySO.attackRange;
     }
 
     private void Attack()
@@ -171,7 +170,7 @@ public class EnemyFSM : MonoBehaviour
         Health targetHealth = target.GetComponent<Health>();
         if (targetHealth == null) return;
 
-        targetHealth.TakeDamage(baseSO.Damage);
+        targetHealth.TakeDamage(EnemySO.Damage);
     }
 
 }
