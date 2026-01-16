@@ -17,7 +17,7 @@ public class EnemyUnit : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"적 현재 체력 : {health.CurrentHP}");
+        //Debug.Log($"적 현재 체력 : {health.CurrentHP}");
 
     }
 }

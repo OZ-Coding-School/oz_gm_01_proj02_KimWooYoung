@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireBoobSO
   m_EditorClassIdentifier: 
   skillName: FileBoob
-  range: 1
+  range: 4
   damage: 2
   areaSize: 3
   type: 1

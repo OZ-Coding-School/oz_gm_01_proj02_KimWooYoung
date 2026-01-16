@@ -41,7 +41,6 @@ public class BFSMoveRange : MonoBehaviour
 
                 if (!gridManager.CanMove(current, next))
                 {
-                    Debug.Log($"CanMove false : {current} -> {next}");
                     continue;
                 }
 

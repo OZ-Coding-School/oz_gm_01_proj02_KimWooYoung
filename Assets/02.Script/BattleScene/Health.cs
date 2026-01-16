@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public event Action<Health> onAnyDeath;
+
     private int currentHP;
     private int maxHP;
-
     public bool isDead = false;
 
     public int CurrentHP => currentHP;
@@ -29,6 +31,9 @@ public class Health : MonoBehaviour
     private void Die()
     {
         isDead = true;
+
+        onAnyDeath?.Invoke(this);
+
         gameObject.SetActive(false);
     }
 }
