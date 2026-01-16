@@ -27,6 +27,15 @@ public class EnemyFSM : MonoBehaviour
 
     public bool isMoving = false;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.RegisterEnemy(this);
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.UnregisterEnemy(this);
+    }
+
     public void StartTrun()
     {
 
@@ -62,7 +71,6 @@ public class EnemyFSM : MonoBehaviour
 
         if (path == null || path.Count <= 1) return;
 
-        //이동량 만큼 이동
         int maxReach = path.Count - 2;
         int step = Mathf.Min(moveRange, maxReach);
 
@@ -165,7 +173,6 @@ public class EnemyFSM : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log("[Enemy] Attack!");
 
         Health targetHealth = target.GetComponent<Health>();
         if (targetHealth == null) return;

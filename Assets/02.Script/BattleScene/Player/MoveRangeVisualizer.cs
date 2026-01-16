@@ -27,10 +27,6 @@ public class MoveRangeVisualizer : MonoBehaviour
     {
         if (isMoving) return;
 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    ShowMoveRage();
-        //}
         if (Input.GetMouseButtonDown(0)) 
         {
             TryMove();
@@ -97,9 +93,9 @@ public class MoveRangeVisualizer : MonoBehaviour
         transform.position = gridManager.GridToWorld(currentGrid);
         isMoving = false;
 
-        Debug.Log("이동 끝남, 공격 시도");
+        //Debug.Log("이동 끝남, 공격 시도");
 
-        FindObjectOfType<PlayerAttack>()?.TryAutoAttack();
+        //FindObjectOfType<PlayerAttack>()?.TryAutoAttack();
 
     }
 

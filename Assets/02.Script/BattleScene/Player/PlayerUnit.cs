@@ -17,7 +17,7 @@ public class PlayerUnit : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"플레이어 현재 체력 : {health.CurrentHP}");
+        //Debug.Log($"플레이어 현재 체력 : {health.CurrentHP}");
 
     }
 
