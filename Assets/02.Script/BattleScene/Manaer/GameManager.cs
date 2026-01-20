@@ -13,14 +13,25 @@ public class GameManager : Singleton<GameManager>
        base.Init();
     }
 
+    private void Start()
+    {
+        if (turnManager == null)
+            turnManager = FindObjectOfType<TurnManager>();
+    }
+
     public void RegisterEnemy(EnemyFSM enemy)
     {
         if(!enemies.Contains(enemy)) enemies.Add(enemy);
     }
 
     public void UnregisterEnemy(EnemyFSM enemy)
-    { 
-        enemies.Remove(enemy);
+    {
+        if (enemies.Contains(enemy))
+        {
+            enemies.Remove(enemy);
+        }
+        enemies.RemoveAll(e => e == null);
+
         if(enemies.Count == 0)
         {
             Debug.Log("Stage Clear"); 
@@ -28,6 +39,12 @@ public class GameManager : Singleton<GameManager>
             turnManager.SetState(TurnState.Win);
         }
     }
+    public List<EnemyFSM> GetEnemies()
+    {
+        enemies.RemoveAll(e => e == null || !e.gameObject.activeSelf);
+        return enemies;
+    }
+
     //스테이지 해금 처리
 
 }

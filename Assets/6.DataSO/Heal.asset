@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 462a5700321008844bd61e8706be3a84, type: 3}
-  m_Name: FireBoobSO
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  skillName: FileBoob
-  range: 4
+  skillName: Heal
+  range: 1
   damage: 1
   areaSize: 1
-  type: 1
+  type: 2
