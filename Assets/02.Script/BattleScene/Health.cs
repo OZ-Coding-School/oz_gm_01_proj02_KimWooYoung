@@ -12,7 +12,6 @@ public class Health : MonoBehaviour
     public int CurrentHP => currentHP;
     public int MaxHP => maxHP;
 
-
     public void Init(int maxHp)
     {
         maxHP = maxHp;
@@ -35,5 +34,12 @@ public class Health : MonoBehaviour
         onAnyDeath?.Invoke(this);
 
         gameObject.SetActive(false);
+    }
+
+    public void Heal(int heal)
+    {
+        if(isDead) return;
+
+        currentHP += heal;
     }
 }

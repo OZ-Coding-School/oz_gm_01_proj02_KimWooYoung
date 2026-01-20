@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private PlayerAttack playerAttack;
+    [SerializeField] private GameObject skillSelcet;
     [SerializeField] private GameObject playerTurnPanel;
     [SerializeField] private GameObject gameClear;
     [SerializeField] private GameObject gameOver;
@@ -26,8 +27,12 @@ public class UIManager : MonoBehaviour
     }
     public void OnSkillButton()
     {
-        playerAttack.ShowAttackRange(true);
+        skillSelcet.SetActive(true);
         playerTurnPanel.SetActive(false);
+    }
+    public void SkillPanelClose()
+    {
+        skillSelcet.SetActive(false);
     }
     public void TunrOffButton()
     {

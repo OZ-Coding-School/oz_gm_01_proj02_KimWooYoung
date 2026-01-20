@@ -8,7 +8,6 @@ public class TurnManager : MonoBehaviour
 
     [SerializeField] private IsometricCamera isometricCamera;
     [SerializeField] private Transform player;
-    [SerializeField] private EnemyFSM enemyFSM;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private PlayerAttack playerAttack;
 
@@ -48,23 +47,34 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        if (enemyFSM == null || !enemyFSM.gameObject.activeSelf)
-        {
-            StartCoroutine(PlayerTurn());
-            yield break;
-        }
 
         state = TurnState.EnemyTurn;
 
-        isometricCamera.SetTarget(enemyFSM.transform);
-        Debug.Log("적 턴");
+        var enemies = GameManager.Instance.GetEnemies();
 
-        enemyFSM.StartTrun();
-        yield return new WaitUntil(() => enemyFSM.IsMoving);
+        if(enemies.Count == 0)
+        {
+            SetState(TurnState.Win);
+            yield break;
+        }
 
-        yield return new WaitUntil(() => !enemyFSM.IsMoving);
+        foreach (EnemyFSM enemy in enemies) 
+        {
+            if (enemy == null || !enemy.gameObject.activeSelf)
+            continue;
 
-        yield return new WaitForSeconds(0.5f);
+            isometricCamera.SetTarget(enemy.transform);
+
+            enemy.StartTrun();
+
+            Debug.Log("적 턴");
+
+            yield return new WaitUntil(() => enemy.IsMoving);
+
+            yield return new WaitUntil(() => !enemy.IsMoving);
+
+            yield return new WaitForSeconds(0.5f);
+        }
 
         StartCoroutine(PlayerTurn());
     }
