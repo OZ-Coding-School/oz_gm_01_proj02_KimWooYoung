@@ -1,29 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UnlockStage : MonoBehaviour
+public class UnLockStage : MonoBehaviour
 {
     [SerializeField] private int stageIndex;
 
-    public Sprite lockSprite;
-    public Sprite unlockSprite;
-
-    private SpriteRenderer sr;
+    private Image image;
+    private Button button;
 
     private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
+        image = GetComponent<Image>();
+        button = GetComponent<Button>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         Refresh();
     }
 
     public void Refresh()
     {
-        bool unlocked =
-            stageIndex <= DataManager.Instance.progress.maxUnlockedStage;
+        if (DataManager.Instance == null)
+            return;
 
-        sr.sprite = unlocked ? unlockSprite : lockSprite;
+        bool unlocked =
+            stageIndex <= DataManager.Instance.maxUnlockedStage;
+
+        image.color = unlocked ? Color.white : Color.gray;
+        button.interactable = unlocked;
     }
+
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fc45b074d054849a16dc0f2b992d08, type: 3}
   m_Name: NomalEnemySO
   m_EditorClassIdentifier: 
-  maxHp: 10
+  maxHp: 1
   Damage: 1
   attackRange: 1
   berserkHpRatio: 0
