@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,6 +30,12 @@ public class UIManager : MonoBehaviour
     {
         skillSelcet.SetActive(true);
         playerTurnPanel.SetActive(false);
+
+        SkillButton[] buttons = skillSelcet.GetComponentsInChildren<SkillButton>(true);
+        foreach (var btn in buttons)
+        {
+            btn.Refresh();
+        }
     }
     public void SkillPanelClose()
     {
@@ -50,7 +57,6 @@ public class UIManager : MonoBehaviour
     }
     public void OkButton()
     {
-        Application.Quit();
-
+        SceneManager.LoadScene("StageSelectScene");
     }
 }
