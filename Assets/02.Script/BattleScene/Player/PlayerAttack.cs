@@ -228,18 +228,14 @@ public class PlayerAttack : MonoBehaviour
 
         Vector2Int grid = gridManager.WorldToGrid(hit.point);
 
-        // 사거리 밖이면 미리보기 안함
         if (!attackRange.Contains(grid)) return;
 
-        // 기존 하이라이트 초기화
         gridManager.ResetAllTiles(Color.white);
 
-        // 사거리 다시 표시
         gridManager.HighlightTiles(attackRange, Color.red);
 
-        // Area 범위 표시
         areaPreview = BuildAreaRange(grid, currentSkill.areaSize);
-        gridManager.HighlightTiles(areaPreview, new Color(1f, 0.5f, 0f)); // 주황색
+        gridManager.HighlightTiles(areaPreview, new Color(1f, 0.5f, 0f));
     }
 
     private void CancelAttack()

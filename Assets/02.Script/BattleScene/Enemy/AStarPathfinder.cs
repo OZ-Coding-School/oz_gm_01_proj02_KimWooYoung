@@ -53,7 +53,7 @@ public class AStarPathfinder : MonoBehaviour
             foreach (var dir in dirs)
             {
                 var neighbor = current + dir;
-                if (neighbor != end && !IsValid(neighbor) || closedSet.Contains(neighbor)
+                if ((neighbor != end && !IsValid(neighbor) )|| closedSet.Contains(neighbor)
                     || !gridManager.CanMove(current, neighbor))
                 {
                     continue;
@@ -95,11 +95,8 @@ public class AStarPathfinder : MonoBehaviour
         if (pos.x < 0 || pos.x >= gridManager.gridwidth) return false;
         if (pos.y < 0 || pos.y >= gridManager.gridheight) return false;
 
-        Tile tile = gridManager.GetTile(pos);
-        
-        if (tile == null) return false;
+        return gridManager.GetTile(pos) != null;
 
-        return tile.walkable;
     }
 
     //경로를 재구성 하는 메서드

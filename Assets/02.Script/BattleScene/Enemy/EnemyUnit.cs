@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class EnemyUnit : MonoBehaviour
 {
-    [SerializeField] private BaseSO EnemySO;
+    [SerializeField] private EnemySO EnemySO;
 
     private Health health;
 
-    public BaseSO Data => EnemySO;
+    public EnemySO Data => EnemySO;
 
     private void Awake()
     {
         health = GetComponent<Health>();
         health.Init(EnemySO.maxHp);
-
     }
+
 
     private void Update()
     {
-        //Debug.Log($"적 현재 체력 : {health.CurrentHP}");
+        Debug.Log($"적 현재 체력 : {health.CurrentHP}");
 
     }
 }

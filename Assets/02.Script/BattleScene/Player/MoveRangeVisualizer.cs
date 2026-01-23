@@ -93,9 +93,6 @@ public class MoveRangeVisualizer : MonoBehaviour
         transform.position = gridManager.GridToWorld(currentGrid);
         isMoving = false;
 
-        //Debug.Log("이동 끝남, 공격 시도");
-
-        //FindObjectOfType<PlayerAttack>()?.TryAutoAttack();
 
     }
 
