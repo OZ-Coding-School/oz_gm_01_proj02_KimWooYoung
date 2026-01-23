@@ -27,6 +27,9 @@ public class GridManager : MonoBehaviour
     //오브젝트 스폰 위치 저장
     private HashSet<Vector2Int> spawnGridSet = new HashSet<Vector2Int>();
 
+    private HashSet<Vector2Int> occupied = new HashSet<Vector2Int>();
+
+
 
     public Tile[,] tiles;
 
@@ -114,6 +117,8 @@ public class GridManager : MonoBehaviour
 
         if(fromTile == null || toTile == null) return false;
 
+        if(IsOccupied(to)) return false;
+
         int heightDiff = toTile.height -fromTile.height;
 
         if(heightDiff> 1) return false;
@@ -177,4 +182,18 @@ public class GridManager : MonoBehaviour
         return tiles[pos.x, pos.y];
     }
 
+    public bool IsOccupied(Vector2Int pos)
+    {
+        return occupied.Contains(pos);
+    }
+
+    public void SetOccupied(Vector2Int pos)
+    {
+        occupied.Add(pos);
+    }
+
+    public void ClearOccupied(Vector2Int pos)
+    {
+        occupied.Remove(pos);
+    }
 }

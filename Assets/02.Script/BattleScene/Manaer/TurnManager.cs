@@ -13,6 +13,10 @@ public class TurnManager : MonoBehaviour
 
     public TurnState state;
 
+    private void Awake()
+    {
+        GameManager.Instance.SetTurnManager(this);
+    }
     private void Start()
     {
         state = TurnState.Start;
@@ -65,15 +69,11 @@ public class TurnManager : MonoBehaviour
 
             isometricCamera.SetTarget(enemy.transform);
 
-            enemy.StartTrun();
-
-            Debug.Log("Àû ÅÏ");
-
-            yield return new WaitUntil(() => enemy.IsMoving);
-
-            yield return new WaitUntil(() => !enemy.IsMoving);
+            yield return StartCoroutine(enemy.StartTurnCoroutine());
 
             yield return new WaitForSeconds(0.5f);
+
+
         }
 
         StartCoroutine(PlayerTurn());

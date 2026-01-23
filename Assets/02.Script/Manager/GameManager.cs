@@ -11,12 +11,13 @@ public class GameManager : Singleton<GameManager>
     protected override void Init()
     {
        base.Init();
+        enemies.Clear();
+        enemies.AddRange(FindObjectsOfType<EnemyFSM>());
     }
 
-    private void Start()
+    public void SetTurnManager(TurnManager tm)
     {
-        if (turnManager == null)
-            turnManager = FindObjectOfType<TurnManager>();
+        turnManager = tm;
     }
 
     public void RegisterEnemy(EnemyFSM enemy)
