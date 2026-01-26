@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerUnit : MonoBehaviour
 {
     [SerializeField] private BaseSO playerSO;
+    [SerializeField] private Animator animator;
 
     private Health health;
 
@@ -13,6 +14,12 @@ public class PlayerUnit : MonoBehaviour
         health = GetComponent<Health>();
         health.Init(playerSO.maxHp);
 
+        health.OnHit += PlayHit;
+    }
+
+    private void PlayHit()
+    {
+        animator.SetTrigger("Hit");
     }
 
     private void Update()

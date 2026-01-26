@@ -61,6 +61,12 @@ public class EnemyAttack : MonoBehaviour
         if (targetHp == null) return;
 
         int dmg = CalculateDamage();
+        Animator targetAnim = target.GetComponent<Animator>();
+        if(targetAnim != null)
+        {
+            targetAnim.SetTrigger("Hit");
+        }
+
         targetHp.TakeDamage(dmg);
     }
 

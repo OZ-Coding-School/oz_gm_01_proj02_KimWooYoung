@@ -174,9 +174,10 @@ public class EnemyFSM : MonoBehaviour
     {
         enemyAttack.Attack(target);
     }
-    private void OnDestroy()
+    public void Die()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.UnregisterEnemy(this);
+        GameManager.Instance.UnregisterEnemy(this);
+        gameObject.SetActive(false); 
     }
+
 }

@@ -7,6 +7,7 @@ public class MoveRangeVisualizer : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private BFSMoveRange bfsMoveRange;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Animator animator;
 
     [Header("PlayerMove")]
     [SerializeField] private int moveRange = 3;
@@ -58,6 +59,7 @@ public class MoveRangeVisualizer : MonoBehaviour
     private IEnumerator MoveToCo(Vector3 targetWorld)
     {
         isMoving = true;
+        animator.SetBool("IsMoving", true);
 
         Vector2Int currentGrid = gridManager.WorldToGrid(transform.position);
         Vector2Int targetGrid = gridManager.WorldToGrid(targetWorld);
@@ -92,7 +94,7 @@ public class MoveRangeVisualizer : MonoBehaviour
         gridManager.ResetAllTiles(defaultColor);
         transform.position = gridManager.GridToWorld(currentGrid);
         isMoving = false;
-
+        animator.SetBool("IsMoving", false);
 
     }
 

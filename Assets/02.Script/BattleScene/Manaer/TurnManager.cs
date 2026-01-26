@@ -56,7 +56,7 @@ public class TurnManager : MonoBehaviour
 
         var enemies = GameManager.Instance.GetEnemies();
 
-        if(enemies.Count == 0)
+        if (enemies.Count == 0)
         {
             SetState(TurnState.Win);
             yield break;
@@ -105,7 +105,10 @@ public class TurnManager : MonoBehaviour
 
     private void OnWin()
     {
+        int clearedStageIndex = DataManager.Instance.maxUnlockedStage;
+        DataManager.Instance.HandleStageClear(clearedStageIndex);
         uiManager.GameCler();
+ 
     }
 
     private void OnLose()

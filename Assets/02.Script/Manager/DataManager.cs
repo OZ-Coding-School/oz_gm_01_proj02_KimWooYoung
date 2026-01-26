@@ -48,6 +48,7 @@ public class DataManager : MonoBehaviour
 
     public void HandleStageClear(int stageIndex)
     {
+
         bool changed = false;
 
         // 스테이지 해금
