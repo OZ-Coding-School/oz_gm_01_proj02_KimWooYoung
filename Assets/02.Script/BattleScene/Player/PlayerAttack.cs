@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GridHighlight gridHighlight;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private Animator animator;
 
     private SkillSO currentSkill;
 
@@ -124,6 +125,7 @@ public class PlayerAttack : MonoBehaviour
         if (!attackRange.Contains(clickGrid)) return;
 
         HasConfirmedAttack = true;
+        animator.SetTrigger("Attack");
         
         if (isSkillAttack)
         {

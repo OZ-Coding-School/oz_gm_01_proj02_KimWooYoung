@@ -46,7 +46,6 @@ public class GameManager : Singleton<GameManager>
 
             OnStageCleared?.Invoke();
 
-
             turnManager.SetState(TurnState.Win);
         }
     }
